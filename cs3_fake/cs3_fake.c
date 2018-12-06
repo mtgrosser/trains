@@ -15,7 +15,6 @@ static struct device_attribute machine_attr;
 
 ssize_t soc0_machine_read(struct device* dev, struct device_attribute* attr, char* buf)
 {
-
 	return scnprintf(buf, PAGE_SIZE, "%s", "Sontheim i.MX6 Solo SMARC Board\n");
 }
 
@@ -35,7 +34,6 @@ static int __init cs3_init(void)
 		goto unregister_dev;
 
 	printk(KERN_INFO "cs3_fake: CS3 platform registered\n");
-
 	return 0;
 
 unregister_dev:
@@ -48,7 +46,7 @@ static void __exit cs3_exit(void)
 {
 	sysfs_remove_file(&soc0_dev->kobj, &machine_attr.attr);
 	root_device_unregister(soc0_dev);
-        printk(KERN_INFO "cs3_fake: CS3 platform unregistered\n");
+	printk(KERN_INFO "cs3_fake: CS3 platform unregistered\n");
 }
 
 
