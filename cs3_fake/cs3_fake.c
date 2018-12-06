@@ -8,8 +8,10 @@
 #include <linux/slab.h>
 #include <linux/sys_soc.h>
 
+
 static struct device *soc0_dev;
 static struct device_attribute machine_attr;
+
 
 ssize_t soc0_machine_read(struct device* dev, struct device_attribute* attr, char* buf)
 {
@@ -32,6 +34,8 @@ static int __init cs3_init(void)
 	if (PTR_ERR((const void *) sysfs_create_file(&soc0_dev->kobj, &machine_attr.attr)))
 		goto unregister_dev;
 
+	printk(KERN_INFO "cs3_fake: CS3 platform registered\n");
+
 	return 0;
 
 unregister_dev:
@@ -39,11 +43,14 @@ unregister_dev:
 	return - ENOMEM;
 }
 
+
 static void __exit cs3_exit(void)
 {
 	sysfs_remove_file(&soc0_dev->kobj, &machine_attr.attr);
 	root_device_unregister(soc0_dev);
+        printk(KERN_INFO "cs3_fake: CS3 platform unregistered\n");
 }
+
 
 module_init(cs3_init);
 module_exit(cs3_exit);
